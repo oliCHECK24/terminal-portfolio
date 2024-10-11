@@ -3,12 +3,11 @@
 import { adaptUsername, getData, saveData } from '@/actions/api';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react';
-import DataEditor from './DataEditor';
 import EditForm from './EditForm';
 import OptionView from './OptionView';
 
 // Define the structure of an option
-interface Option {
+export interface Option {
   label: string;
   about: string;
   value: string;
@@ -20,7 +19,6 @@ const ProfileEditor = ({ username }: { username?: string }) => {
   const [options, setOptions] = useState<Option[]>([]);
   const router = useRouter();
   const [isAddingNew, setIsAddingNew] = useState<boolean>(false);
-  const [newOption, setNewOption] = useState<Option>({ label: '', about: '', value: '', editing: true });
   const [loading, setLoading] = useState<boolean>(false); // Loading state
 
   // Toggle edit mode for an option
@@ -80,7 +78,7 @@ const ProfileEditor = ({ username }: { username?: string }) => {
 
     setLoading(true); // Start loading
 
-    const newOptions = [...options];
+    let newOptions = [...options];
     const newOptionData = {
       label: target.label.value,
       about: target.about.value,
@@ -90,12 +88,12 @@ const ProfileEditor = ({ username }: { username?: string }) => {
     };
 
     if (isNew) {
-      setOptions([...options, newOptionData]);
+      newOptions = [...options, newOptionData];
       setIsAddingNew(false);
     } else if (index !== undefined) {
       newOptions[index] = newOptionData;
-      setOptions(newOptions);
     }
+    setOptions(newOptions);
 
     await saveData(newOptions, username);
     setLoading(false); // End loading
@@ -182,7 +180,7 @@ const ProfileEditor = ({ username }: { username?: string }) => {
         ) : (
           <div className="max-w-4xl mx-auto rounded-lg p-6 bg-white shadow-md mb-4">
             <EditForm
-              option={newOption}
+              option={{ label: '', about: '', value: '', data: [] }}
               isNew={true}
               onSubmit={updateOption}
               onCancel={() => setIsAddingNew(false)}

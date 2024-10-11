@@ -1,6 +1,7 @@
 
 'use server';
-var fs = require('fs');
+import { Option } from '@/components/EditData/ProfileEditor';
+import fs from 'fs';
 let username = "";
 
 export const setUsername = (name: string) => {
@@ -31,7 +32,7 @@ export const adaptUsername = (oldUsername: string, newUsername: string) => {
 }
 
 
-export const saveData = async (data: any, name?:string) => {
+export const saveData = async (data: Option[], name?:string) => {
   if(!name) {
     const oldData = await import(`@/assets/data.json`);
     const newData = {...oldData.default, options:data};
