@@ -18,6 +18,7 @@ const isLocalhost = Boolean(
     )
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function register(config: any) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -54,6 +55,7 @@ export function register(config: any) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function registerValidSW(swUrl: string, config: any) {
   navigator.serviceWorker
     .register(swUrl)
@@ -95,6 +97,7 @@ function registerValidSW(swUrl: string, config: any) {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function checkValidServiceWorker(swUrl: string, config: any) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)

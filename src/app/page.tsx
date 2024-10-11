@@ -1,12 +1,14 @@
+'use client';
+
 import { useEffect, useRef, useState } from "react";
 
-import info from "../../data.json";
-import { themes } from "../../constants";
+import info from "@/assets/data.json";
+import { themes } from "@/services/constants";
 
 const options = info.options.map((option) => option.label);
 import { Queue } from "queue-typescript";
-import PromptBar from "../components/PromptBar";
-import { IDataType } from "../types";
+import PromptBar from "@/components/PromptBar";
+import { IDataType } from "@/types";
 
 const historyCommand = new Queue<string>();
 let count = 1;
@@ -281,8 +283,8 @@ function Homepage() {
       <div className="font-bold text-xl p-2 w-[100vw] min-h-[100vh] bg-bgcol">
         {
           /* History */
-          history.map((history) => (
-            <div className="mb-2 text-command">
+          history.map((history, idx) => (
+            <div key={idx} className="mb-2 text-command">
               <PromptBar customUserName={customUserName} />
               <span>{history.command}</span> <br />
               <span dangerouslySetInnerHTML={{ __html: history.output }} />

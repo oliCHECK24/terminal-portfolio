@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { getData, setUsername } from "../api";
+'use client';
+import { getData, setUsername } from "@/actions/api";
 import {
   useEffect,
   useRef,
@@ -7,9 +7,9 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import PromptBar from "../components/PromptBar";
-import commands from "../commands.json";
-import { themes } from "../../constants";
+import PromptBar from "@/components/PromptBar";
+import commands from "@/assets/commands.json";
+import { themes } from "@/services/constants";
 
 interface State {
   history: {
@@ -36,9 +36,7 @@ interface State {
   showWelcomeMessage: boolean;
 }
 
-function Profile() {
-  const { username } = useParams();
-
+function Profile({ params:{username} }: { params: { username: string } }) {
   const [state, setState]: [State, Dispatch<SetStateAction<State>>] =
     useState<State>({
       history: [],
@@ -65,7 +63,7 @@ function Profile() {
 
   useEffect(() => {
     setUsername(username!);
-    getData().then((data) =>
+    getData(username).then((data) =>
       setState((prev) => ({
         ...prev,
         userInfo: data,
@@ -391,7 +389,7 @@ function Profile() {
     <div className={`${currentTheme} min-h-[100vh] w-[100vw] bg-bgcol`}>
       {state.showWelcomeMessage && (
         <p className="font-bold p-2">
-          Type 'help' to view all available commands
+          Type &apos;help&apos; to view all available commands
         </p>
       )}
       <div className="font-bold text-xl p-2">
